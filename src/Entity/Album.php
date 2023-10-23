@@ -20,6 +20,9 @@ class Album
     #[ORM\JoinColumn(nullable: false)]
     private ?Artiste $artiste = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $coverFilename = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -45,6 +48,19 @@ class Album
     public function setArtiste(?Artiste $artiste): static
     {
         $this->artiste = $artiste;
+
+        return $this;
+    }
+
+
+    public function getCoverFilename(): string
+    {
+        return $this->coverFilename;
+    }
+
+    public function setCoverFilename(string $coverFilename): self
+    {
+        $this->coverFilename = $coverFilename;
 
         return $this;
     }

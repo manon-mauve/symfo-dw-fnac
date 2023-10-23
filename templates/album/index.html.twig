@@ -3,8 +3,32 @@
 {% block title %}Album index{% endblock %}
 
 {% block body %}
-    <h1>Album index</h1>
+    <h1>Album</h1>
 
+    <section>
+    <div class="d-flex justify-content-evenly flex-wrap">
+        {% for album in albums %}
+        <div class="card mb-2" style="width: 20rem;">
+            <img src="{{ asset('uploads/album/cover/' ~ album.coverFilename) }}" class="card-img-top" alt="{{ album.name }}">
+            <div class="card-body">
+                <h5 class="card-title fw-bold">{{ album.name }}</h5>
+                <h6 class="card-subtitle mb-2 text-body-secondary">{{ album.artiste }}</h6>
+                {% if is_granted('ROLE_ADMIN') %}
+                <a href="{{ path('app_album_show', {'id': album.id}) }}" class="btn btn-primary">Show</a>
+                <a href="{{ path('app_album_edit', {'id': album.id}) }}" class="btn btn-primary">Edit</a>
+                {% endif %}
+            </div>
+        </div>
+        {% else %}
+            <p>No records found</p>
+        {% endfor %}
+    </div>
+    {% if is_granted('ROLE_ADMIN') %}
+        <a class="btn btn-primary" href="{{ path('app_album_new') }}">Create new</a>
+        {% endif %}
+</section>
+
+<!--
     <table class="table">
         <thead>
             <tr>
@@ -37,4 +61,6 @@
     {% if is_granted('ROLE_ADMIN') %}
     <a class="btn btn-primary" href="{{ path('app_album_new') }}">Create new</a>
     {% endif %}
+    -->
 {% endblock %}
+
