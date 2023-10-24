@@ -28,6 +28,7 @@ class AchatController extends AbstractController
         $em->persist($achat);
         $em->flush();
         return $this->redirectToRoute('app_album_index');
+
     }
 }
 

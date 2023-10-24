@@ -21,6 +21,20 @@ class AchatRepository extends ServiceEntityRepository
         parent::__construct($registry, Achat::class);
     }
 
+    public function findAlbumBoughtByUser(int $id_user): array
+    {
+       return $this->createQueryBuilder('a') // selectionne tous les achats qu'il appelle a
+            ->select('album')
+                ->from('App\Entity\Album', 'album')
+            ->andWhere('a.user = :id_user') //requête préparée parmi ces achats de l'utilisteur
+            ->andWhere('a.album = album.id') //sélectionne l'album associé à un achat
+            ->setParameter('id_user', $id_user) //vérifie la variable id_user que j'ai mis en paramètre
+            ->getQuery()
+            ->getResult();
+   }
+
+
+
 //    /**
 //     * @return Achat[] Returns an array of Achat objects
 //     */

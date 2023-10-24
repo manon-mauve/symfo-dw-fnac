@@ -4,8 +4,13 @@ namespace App\Entity;
 
 use App\Repository\AchatRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\UniqueConstraint;
 
-#[ORM\Entity(repositoryClass: AchatRepository::class)]
+#[ORM\Entity(repositoryClass: AchatRepository::class), UniqueConstraint(
+    name:'user_album_constraint', 
+    columns: ['user_id', 'album_id'], 
+    options: ['comment' => 'Un utilisateur ne peut acheter quune seule fois chaque album.']
+    )]
 class Achat
 {
     #[ORM\Id]
