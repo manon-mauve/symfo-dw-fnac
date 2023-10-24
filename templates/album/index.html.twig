@@ -13,8 +13,11 @@
             <div class="card-body">
                 <h5 class="card-title fw-bold">{{ album.name }}</h5>
                 <h6 class="card-subtitle mb-2 text-body-secondary">{{ album.artiste }}</h6>
-                {% if is_granted('ROLE_ADMIN') %}
+                {% if app.user %}
                 <a href="{{ path('app_album_show', {'id': album.id}) }}" class="btn btn-primary">Show</a>
+                <a href="{{ path('app_achat', {'id_album': album.id}) }}" class="btn btn-primary">Buy</a>
+                {% endif %}
+                {% if is_granted('ROLE_ADMIN') %}
                 <a href="{{ path('app_album_edit', {'id': album.id}) }}" class="btn btn-primary">Edit</a>
                 {% endif %}
             </div>
