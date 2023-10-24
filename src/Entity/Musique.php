@@ -4,8 +4,11 @@ namespace App\Entity;
 
 use App\Repository\MusiqueRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: MusiqueRepository::class)]
+#[Vich\Uploadable] 
 class Musique
 {
     #[ORM\Id]
@@ -16,9 +19,40 @@ class Musique
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(inversedBy:'musiques')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Album $album = null;
+
+    #[Vich\UploadableField(mapping: 'songs', fileNameProperty: 'songName')]
+    private ?File $songFile = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?string $songName = null;
+
+    public function setSongFile(?File $songFile = null): void
+    {
+        $this->songFile = $songFile;
+    }
+
+    public function getSongFile(): ?File
+    {
+        return $this->songFile;
+    }
+
+    public function setSongName(?string $songName): void
+    {
+        $this->songName = $songName;
+    }
+
+    public function getSongName(): ?string
+    {
+        return $this->songName;
+    }
+
+    public function __toString(): string
+    {
+        return $this->name ?? '';
+    }
 
     public function getId(): ?int
     {

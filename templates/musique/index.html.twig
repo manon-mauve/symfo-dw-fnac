@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Musique index{% endblock %}
+
+{% block body %}
+    <h1>Musique index</h1>
+
+    <ol class="list-group list-group-numbered">
+        {% for musique in musiques %}
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto">
+                    <div class="fw-bold">
+                        {{ musique.name }}
+                    </div>
+                </div>
+                <div class="ms-5">
+                    <audio src="{{ asset('uploads/songs/' ~ musique.songName) }}" controls></audio>
+                </div>
+                <div>
+                    <a href="{{ path('app_musique_show', {'id': musique.id}) }}">show</a>
+                    <a href="{{ path('app_musique_edit', {'id': musique.id}) }}">edit</a>
+                </div>
+            </li>
+        {% else %}
+            <p>No songs found</p>
+        {% endfor %}
+    </ol>        
+
+    <a href="{{ path('app_musique_new') }}">Create new</a>
+{% endblock %}
